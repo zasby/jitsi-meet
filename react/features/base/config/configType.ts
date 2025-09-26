@@ -188,6 +188,10 @@ export interface IConfig {
         watchRTCEnabled?: boolean;
         whiteListedEvents?: string[];
     };
+    meshP2P?: {
+        enabled?: boolean;
+        maxPeers?: number;
+    };
     apiLogLevels?: Array<'warn' | 'log' | 'error' | 'info' | 'debug'>;
     appId?: string;
     audioLevelsInterval?: number;

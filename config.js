@@ -30,7 +30,7 @@ var config = {
 
     hosts: {
         // XMPP domain.
-        domain: 'jitsi-meet.example.com',
+        domain: 'connect.mooz.pro',
 
         // When using authentication, domain for guest users.
         // anonymousdomain: 'guest.example.com',
@@ -42,14 +42,14 @@ var config = {
         // focus: 'focus.jitsi-meet.example.com',
 
         // XMPP MUC domain. FIXME: use XEP-0030 to discover it.
-        muc: 'conference.' + subdomain + 'jitsi-meet.example.com',
+        muc: 'conference.connect.mooz.pro',
     },
 
     // BOSH URL. FIXME: use XEP-0156 to discover it.
-    bosh: 'https://jitsi-meet.example.com/' + subdir + 'http-bind',
+    bosh: 'https://connect.mooz.pro/http-bind',
 
     // Websocket URL (XMPP)
-    websocket: 'wss://jitsi-meet.example.com/' + subdir + 'xmpp-websocket',
+    websocket: 'wss://connect.mooz.pro/xmpp-websocket',
 
     // websocketKeepAliveUrl: 'https://jitsi-meet.example.com/' + subdir + '_unlock',
 
@@ -122,6 +122,17 @@ var config = {
         // If false (default), Spot instances will not show the recording consent dialog.
         // If true, Spot instances will show the recording consent dialog like regular clients.
         // showSpotConsentDialog: false,
+    },
+
+    // Mesh P2P (experimental, custom fork)
+    //
+    // При включении клиент пытается установить P2P-меш с каждым участником
+    // без использования JVB. Ресурсоемко, предназначено только для малых комнат.
+    meshP2P: {
+        // Глобальный переключатель. По умолчанию выключено (false).
+        enabled: false,
+        // Максимум пиров в меше (не включая себя). Если не задано на деплое — использовать 5.
+        maxPeers: 5
     },
 
     // Disables moderator indicators.
@@ -1116,11 +1127,16 @@ var config = {
 
         // The STUN servers that will be used in the peer to peer connections
         stunServers: [
-
-            // { urls: 'stun:jitsi-meet.example.com:3478' },
-            { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' },
+            { urls: 'stun:turn.connect.mooz.pro:3478' },
         ],
     },
+
+    // ВКЛ mesh-режим без JVB/Jicofo
+    meshP2P: {
+        enabled: true,
+        // maxPeers по умолчанию 5 (если не задан)
+    },
+    disableFocus: true,
 
     analytics: {
         // True if the analytics should be disabled
@@ -1910,3 +1926,4 @@ if (enableJaaS) {
     config.dialInConfCodeUrl = 'https://conference-mapper.jitsi.net/v1/access';
     config.roomPasswordNumberOfDigits = 10; // skip re-adding it (do not remove comment)
 }
+
